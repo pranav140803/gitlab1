@@ -3,13 +3,13 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "my-nginx-image"
-        AWS_SERVER_IP = "<your-ec2-ip>"
+        AWS_SERVER_IP = "16.171.152.4"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/yourusername/yourrepo.git'
+                git 'https://github.com/pranav140803/gitlab1'
             }
         }
         stage('Build Docker Image') {
@@ -22,8 +22,8 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh 'docker login -u yourdockerhubusername -p yourpassword'
-                    sh 'docker push yourdockerhubusername/$DOCKER_IMAGE'
+                    sh 'docker login -u pranav -p pranav'
+                    sh 'docker push pranav/$DOCKER_IMAGE'
                 }
             }
         }
