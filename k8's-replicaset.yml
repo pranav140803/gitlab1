@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+ name: replicaset-nginx
+spec:
+ replicas: 3
+ selector:
+   matchLabels:
+     env: dev
+ template:
+   metadata:
+     name: nginx-pod
+     labels:
+       env: dev
+   spec:
+     containers:
+       - name: nginx-container
+         image: nginx
+         ports:
+           - containerPort: 80
+         resources:
+           requests:
+             cpu: "100m"
+             memory: "128Mi"
+           limits:
+             cpu: "500m"
+             memory: "256Mi"
