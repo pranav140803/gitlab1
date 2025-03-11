@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'docker:latest' }
-    }
+    agent any
 
     environment {
         DOCKER_IMAGE = "pranavsal/k8-eks-workernode:eks"
