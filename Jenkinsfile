@@ -2,20 +2,20 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "my-nginx-image"
+        DOCKER_IMAGE = "pranavsal/k8-eks-workernode:eks"
         AWS_SERVER_IP = "16.171.152.4"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/pranav140803/gitlab1'
+                git branch: 'main', url: 'https://github.com/pranav140803/gitlab1'
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKER_IMAGE.'
+                    sh 'docker build -t pranavsal/k8-eks-workernode:eks .'
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker login -u pranav -p pranav'
-                    sh 'docker push $DOCKER_IMAGE'
+                    sh 'docker push pranavsal/k8-eks-workernode:eks'
                 }
             }
         }
