@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: deployment-nginx
+spec:
+ replicas: 6
+ selector:
+   matchLabels:
+     app: nginx
+     env: dev
+ template:
+   metadata:
+     labels:
+       app: nginx
+       env: dev
+   spec:
+     containers:
+       - name: nginx-container
+         image: pranavsal/k8-eks-workernode:eks
+         ports:
+           - containerPort: 80
+         resources:
+           requests:
+             cpu: "100m"
+             memory: "128Mi"
+           limits:
+             cpu: "500m"
+             memory: "256Mi"
