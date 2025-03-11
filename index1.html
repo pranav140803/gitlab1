@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EKS Worker Node Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .info-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .info-container p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .info-container .label {
+            font-weight: bold;
+            color: #34495e;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>EKS Worker Node Information</h1>
+
+    <div class="info-container">
+        <p><span class="label">Instance ID:</span> <span id="instance-id">Loading...</span></p>
+        <p><span class="label">Node Status:</span> <span id="node-status">Loading...</span></p>
+        <p><span class="label">Node Name:</span> <span id="node-name">Loading...</span></p>
+        <p><span class="label">Node Version:</span> <span id="node-version">Loading...</span></p>
+        <p><span class="label">Cluster Name:</span> <span id="cluster-name">Loading...</span></p>
+    </div>
+
+    <script>
+        // Fetch instance metadata and EKS info using AWS metadata and kubectl
+        async function getMetadata() {
+            const metadataEndpoint = 'http://169.254.169.254/latest/meta-data/';
+
+            // Fetch Instance ID
+            const instanceId = await fetch(metadataEndpoint + 'instance-id')
+                .then(res => res.text())
+                .catch(() => 'Unavailable');
+
+            // Fetch Node Name (assuming it's accessible)
+            const nodeName = await fetch(metadataEndpoint + 'hostname')
+                .then(res => res.text())
+                .catch(() => 'Unavailable');
+
+            // Replace instance ID and Node Name in the HTML
+            document.getElementById('instance-id').textContent = instanceId;
+            document.getElementById('node-name').textContent = nodeName;
+        }
+
+        // Fetch EKS cluster info via kubectl (simplified example)
+        async function getEKSInfo() {
+            // You would replace the following with real data from your EKS environment
+            const eksData = {
+                nodeStatus: 'Running',  // Example, replace with real status
+                nodeVersion: '1.21',   // Example version of Kubernetes
+                clusterName: 'my-cluster' // Replace with actual cluster name
+            };
+
+            // Update the EKS-related fields in the HTML
+            document.getElementById('node-status').textContent = eksData.nodeStatus;
+            document.getElementById('node-version').textContent = eksData.nodeVersion;
+            document.getElementById('cluster-name').textContent = eksData.clusterName;
+        }
+
+        // Initialize the page by fetching metadata and EKS info
+        getMetadata();
+        getEKSInfo();
+    </script>
+</body>
+</html>
