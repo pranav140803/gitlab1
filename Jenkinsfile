@@ -15,7 +15,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t pranavsal/k8-eks-workernode'
+                    sh 'docker build -t DOCKER$'
                 }
             }
         }
