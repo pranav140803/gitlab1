@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "pranavsal/k8-eks-workernode:eks"
-        AWS_SERVER_IP = "16.171.152.4"
+        AWS_SERVER_IP = "13.60.198.3"
     }
 
     stages {
